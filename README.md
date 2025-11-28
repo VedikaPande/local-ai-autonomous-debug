@@ -542,13 +542,6 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🙏 Acknowledgments
 
@@ -557,28 +550,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **FastAPI** for the excellent web framework
 - **Monaco Editor** for the code editor component
 
----
-
-## 📚 Documentation
-
-- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
-- **[API Documentation](API.md)** - Complete API reference
-- **[Architecture Guide](docs/ARCHITECTURE.md)** - System design and architecture
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
-- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
-- **[Screenshots Guide](docs/SCREENSHOTS.md)** - Adding screenshots to docs
-- **[Changelog](CHANGELOG.md)** - Version history and updates
-
----
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ai-debugger/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ai-debugger/discussions)
-- **Documentation**: Check the docs folder for detailed guides
-- **Quick Help**: See [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
-
----
 
 ## 🗺️ Roadmap
 
