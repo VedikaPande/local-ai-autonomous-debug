@@ -44,6 +44,8 @@ export interface DebugSession {
   versions: CodeVersion[];
   patches: Patch[];
   traces: string[];
+  agent_logs?: any[];  // Agent execution logs for multi-agent mode
+  use_single_agent?: boolean;  // True for single-agent mode, false for multi-agent
   created_at: string;
   completed_at?: string;
 }

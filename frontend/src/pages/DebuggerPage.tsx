@@ -14,6 +14,7 @@ import { ArrowLeft, Play, Loader2, CheckCircle2, XCircle, Send, Code2, Bug, GitB
 import { api } from '../lib/api';
 import type { DebugSession } from '../types';
 import { toast } from 'sonner';
+import { AgentLogs } from '../components/AgentLogs';
 
 // Parse diff into lines with + and - prefixes
 const parseDiff = (diff: string) => {
@@ -39,11 +40,38 @@ export default function DebuggerPage() {
   const [chatMessage, setChatMessage] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [useSingleAgent, setUseSingleAgent] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [ollamaStatus, setOllamaStatus] = useState<'checking' | 'running' | 'offline'>('checking');
   const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'assistant'; content: string; timestamp: Date }[]>([
     { role: 'assistant', content: 'Welcome! I\'m your AI debugging assistant. Paste your code and click "Start Debug Session" to begin.', timestamp: new Date() }
   ]);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const pollingInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // Check Ollama status
+  const checkOllamaStatus = async () => {
+    try {
+      // Try to ping Ollama server
+      const response = await fetch('http://localhost:11434/api/tags', {
+        method: 'GET',
+      });
+      
+      if (response.ok) {
+        setOllamaStatus('running');
+      } else {
+        setOllamaStatus('offline');
+      }
+    } catch (error) {
+      setOllamaStatus('offline');
+    }
+  };
+
+  // Check Ollama status on component mount and periodically
+  useEffect(() => {
+    checkOllamaStatus();
+    const interval = setInterval(checkOllamaStatus, 30000); // Check every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // Update code when language changes
   useEffect(() => {
@@ -65,6 +93,9 @@ export default function DebuggerPage() {
         try {
           const updated = await api.getSession(session.session_id);
           setSession(updated);
+          
+          // Trigger refresh for agent logs
+          setRefreshTrigger(prev => prev + 1);
 
           if (updated.status !== 'running') {
             if (pollingInterval.current) {
@@ -336,6 +367,22 @@ export default function DebuggerPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Ollama Status Indicator */}
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700">
+              <div className={`w-2 h-2 rounded-full ${
+                ollamaStatus === 'running' ? 'bg-emerald-500 animate-pulse' : 
+                ollamaStatus === 'offline' ? 'bg-red-500' : 
+                'bg-yellow-500 animate-pulse'
+              }`}></div>
+              <span className={`text-xs font-medium ${
+                ollamaStatus === 'running' ? 'text-emerald-400' : 
+                ollamaStatus === 'offline' ? 'text-red-400' : 
+                'text-yellow-400'
+              }`}>
+                Ollama {ollamaStatus === 'running' ? 'Running' : ollamaStatus === 'offline' ? 'Offline' : 'Checking...'}
+              </span>
+            </div>
+
             {session && (
               <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700">
                 {getStatusIcon(session.status)}
@@ -431,8 +478,8 @@ export default function DebuggerPage() {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Panel - Chat & Info */}
-        <div className="w-80 border-r border-slate-800 flex flex-col bg-slate-900/30">
-          <Tabs defaultValue="chat" className="flex-1 flex flex-col">
+        <div className="w-80 border-r border-slate-800 flex flex-col bg-slate-900/30 overflow-hidden">
+          <Tabs defaultValue="chat" className="flex-1 flex flex-col overflow-hidden">
             <TabsList className="w-full grid grid-cols-3 bg-transparent px-4 pt-3 border-b border-slate-800">
               <TabsTrigger value="chat" className="gap-2 text-slate-400 data-[state=active]:text-white data-[state=active]:bg-slate-700 hover:text-slate-200 hover:bg-slate-800">
                 <MessageSquare className="h-4 w-4" />
@@ -448,8 +495,8 @@ export default function DebuggerPage() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="chat" className="flex-1 flex flex-col m-0 p-0">
-              <ScrollArea className="flex-1 p-4" ref={chatScrollRef}>
+            <TabsContent value="chat" className="flex-1 flex flex-col m-0 p-0 overflow-hidden">
+              <ScrollArea className="flex-1 p-4 min-h-0" ref={chatScrollRef}>
                 <div className="space-y-3">
                   {chatHistory.map((msg, idx) => (
                     <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -524,19 +571,55 @@ export default function DebuggerPage() {
               </div>
             </TabsContent>
 
-            <TabsContent value="logs" className="flex-1 m-0 p-0">
-              <ScrollArea className="h-full p-4">
-                <div className="space-y-2 font-mono text-xs">
-                  {session?.traces?.map((trace, idx) => (
-                    <div key={idx} className="text-slate-300 bg-slate-800/50 p-2 rounded border border-slate-700">
-                      {trace}
-                    </div>
-                  ))}
-                  {(!session || !session.traces?.length) && (
-                    <div className="text-slate-500 text-center py-12">
-                      No debug logs yet
+            <TabsContent value="logs" className="flex-1 m-0 p-0 overflow-hidden">
+              <ScrollArea className="h-full min-h-0">
+                <div className="p-4 space-y-6">
+                  
+                  {/* Agent Logs Section (for multi-agent debugging) */}
+                  {session && !session.use_single_agent && (
+                    <div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Activity className="h-4 w-4 text-blue-400" />
+                        <h3 className="text-sm font-medium text-slate-300">Multi-Agent Execution</h3>
+                      </div>
+                      <AgentLogs 
+                        sessionId={session.session_id} 
+                        refreshTrigger={refreshTrigger}
+                      />
                     </div>
                   )}
+                  
+                  {/* System Traces Section */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Terminal className="h-4 w-4 text-slate-400" />
+                      <h3 className="text-sm font-medium text-slate-300">System Traces</h3>
+                    </div>
+                    <div className="space-y-2 font-mono text-xs">
+                      {session?.traces?.map((trace, idx) => (
+                        <div key={idx} className="text-slate-300 bg-slate-800/50 p-3 rounded border border-slate-700">
+                          {trace}
+                        </div>
+                      ))}
+                      {(!session || !session.traces?.length) && (
+                        <div className="text-slate-500 text-center py-8 bg-slate-800/30 rounded border border-slate-700">
+                          <Terminal className="h-6 w-6 mx-auto mb-2 text-slate-600" />
+                          <p>No system traces yet</p>
+                          <p className="text-xs text-slate-600 mt-1">Execution logs will appear here</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Empty state when no session */}
+                  {!session && (
+                    <div className="text-center py-12 text-slate-500">
+                      <Terminal className="h-12 w-12 mx-auto mb-4 text-slate-600" />
+                      <p className="text-lg font-medium mb-2">No debugging session active</p>
+                      <p className="text-sm text-slate-600">Submit code to see agent logs and system traces</p>
+                    </div>
+                  )}
+                  
                 </div>
               </ScrollArea>
             </TabsContent>
@@ -571,8 +654,8 @@ export default function DebuggerPage() {
         </div>
 
         {/* Right Panel - Code Editor */}
-        <div className="flex-1 flex flex-col">
-          <Tabs defaultValue="current" className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Tabs defaultValue="current" className="flex-1 flex flex-col overflow-hidden">
             <div className="border-b border-slate-800 bg-slate-900/50 px-4 py-3">
               <TabsList className="bg-transparent gap-2">
                 <TabsTrigger value="current" className="gap-2 text-slate-400 data-[state=active]:text-white data-[state=active]:bg-slate-700 hover:text-slate-200 hover:bg-slate-800">
@@ -645,7 +728,7 @@ export default function DebuggerPage() {
             </TabsContent>
 
             <TabsContent value="versions" className="flex-1 m-0 overflow-hidden">
-              <ScrollArea className="h-full p-4">
+              <ScrollArea className="h-full p-4 min-h-0">
                 <div className="space-y-4 pr-4">
                   {session?.versions?.map((version, idx) => (
                     <div key={idx} className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden hover:border-slate-600 transition-colors">
@@ -711,7 +794,7 @@ export default function DebuggerPage() {
             </TabsContent>
 
             <TabsContent value="diff" className="flex-1 m-0 overflow-hidden">
-              <ScrollArea className="h-full p-4">
+              <ScrollArea className="h-full p-4 min-h-0">
                 <div className="space-y-4 pr-4">
                   {session?.patches?.map((patch, idx) => (
                     <div key={idx} className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden hover:border-slate-600 transition-colors">

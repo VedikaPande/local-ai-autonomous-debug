@@ -43,7 +43,7 @@ export default function LandingPage() {
   ]
 
   const steps = [
-    { number: "1", title: "Paste Code", desc: "Submit your Python code to the editor" },
+    { number: "1", title: "Paste Code", desc: "Submit your code to the editor" },
     { number: "2", title: "AI Analysis", desc: "Our hybrid system analyzes and fixes errors" },
     { number: "3", title: "Get Results", desc: "Review fixes with full traces and details" },
   ]
@@ -115,11 +115,11 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border text-sm">
             <Sparkles className="h-4 w-4 text-cyan-500" />
-            <span>AI-Powered Python Debugging</span>
+            <span>AI-Powered Code Debugging</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            Debug Python
+            Debug Code
             <br />
             <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-transparent bg-clip-text">
               Intelligently
@@ -127,7 +127,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Local AI-powered debugging sandbox that automatically detects, analyzes, and fixes Python errors using
+            Local AI-powered debugging sandbox that automatically detects, analyzes, and fixes Code errors using
             hybrid rule-based and LLM agents. Fast, secure, and completely offline.
           </p>
 
@@ -174,7 +174,7 @@ export default function LandingPage() {
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold">Powerful Features</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to debug Python code faster and smarter
+            Everything you need to debug code faster and smarter
           </p>
         </div>
 
