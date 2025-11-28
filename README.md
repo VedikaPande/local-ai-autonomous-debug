@@ -8,6 +8,8 @@
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
 
 **Debug Code Intelligently**
+![IMG-20251128-WA0002](https://github.com/user-attachments/assets/cc9cca0c-ad82-4a30-86ce-da1932e9cea8)
+
 
 Local AI-powered debugging sandbox that automatically detects, analyzes, and fixes code errors using hybrid rule-based and LLM agents. Fast, secure, and completely offline.
 
@@ -17,20 +19,7 @@ Local AI-powered debugging sandbox that automatically detects, analyzes, and fix
 
 ---
 
-## 📊 Performance Metrics
 
-<div align="center">
-
-| Metric | Value |
-|--------|-------|
-| **Error Types Handled** | 8+ |
-| **Success Rate** | 95% |
-| **Avg Fix Time** | <5s |
-| **Offline Mode** | 100% |
-
-</div>
-
----
 
 ## ✨ Features
 
@@ -40,7 +29,8 @@ Experience intelligent single-agent mode for straightforward error detection and
 
 <div align="center">
 
-![Single Agent Mode - Interface](docs/images/single-agent-1.png)
+![WhatsApp Image 2025-11-28 at 09 30 07_3486b764](https://github.com/user-attachments/assets/066dd52b-e805-481e-9e29-fcfb07cd667b)
+
 *Single Agent Debugger interface showing iteration tracking and status*
 
 ![Single Agent Mode - Results](docs/images/single-agent-2.png)
@@ -63,13 +53,15 @@ Harness the power of multiple specialized AI agents working collaboratively to d
 
 <div align="center">
 
-![Multi-Agent System](docs/images/multi-agent-1.png)
+![IMG-20251128-WA0004](https://github.com/user-attachments/assets/3d62e6f3-074b-4152-a337-ad3884372e25)
+
 *Multi-agent execution with Patch Generator and Validator agents*
 
-![Multi-Agent Logs](docs/images/multi-agent-2.png)
+
 *Detailed agent execution logs showing the debugging process*
 
-![Multi-Agent Success](docs/images/multi-agent-3.png)
+![WhatsApp Image 2025-11-28 at 09 30 07_3486b764](https://github.com/user-attachments/assets/2db9f21b-2a8a-45a7-9d3c-f668872f130d)
+
 *Successful multi-agent debugging with comprehensive analysis*
 
 </div>
@@ -84,7 +76,7 @@ Harness the power of multiple specialized AI agents working collaboratively to d
 
 **Perfect for:** Complex bugs, algorithm errors, comprehensive code analysis
 
-**Tech Stack:** LangGraph, LangChain, Groq LLaMA 3.3 70B
+**Tech Stack:** LangGraph, LangChain, LLaMA 3.3 70B
 
 ### 📝 **Interactive Code Editor**
 
@@ -92,11 +84,9 @@ Professional-grade Monaco editor with intelligent debugging features and real-ti
 
 <div align="center">
 
-![Code Editor - Welcome](docs/images/code-editor-1.png)
-*Clean interface with welcome message and debugging options*
+<img width="1303" height="600" alt="image" src="https://github.com/user-attachments/assets/3f1c0f44-eda9-4aee-b1cd-a23c18f4a9c1" />
 
-![Code Editor - Debugging](docs/images/code-editor-2.png)
-*Live debugging session with code execution and output*
+*Clean interface with welcome message and debugging options*
 
 </div>
 
@@ -115,15 +105,6 @@ Professional-grade Monaco editor with intelligent debugging features and real-ti
 
 Comprehensive logging system providing complete visibility into the debugging process with real-time updates.
 
-<div align="center">
-
-![Execution Logs - Multi-Agent](docs/images/logs-1.png)
-*Multi-agent execution logs showing Patch Generator and Validator activity*
-
-![Execution Logs - System Traces](docs/images/logs-2.png)
-*Detailed system traces with session IDs and timestamps*
-
-</div>
 
 **Logging Features:**
 - 🤖 **Agent Execution Logs**: Track which agents ran and their status
@@ -143,10 +124,11 @@ Git-like version control system tracking every code change with detailed diffs a
 
 <div align="center">
 
-![Version Control - History](docs/images/versions-1.png)
+
 *Version history showing code evolution from v0 to v2*
 
-![Version Control - Diff](docs/images/versions-2.png)
+![IMG-20251128-WA0006](https://github.com/user-attachments/assets/7931f65b-c633-4075-a2ec-d8311dae2541)
+
 *Detailed diff view highlighting exact code changes*
 
 </div>
@@ -169,13 +151,15 @@ Advanced patching system with AI-powered reasoning, detailed error analysis, and
 
 <div align="center">
 
-![Patch System - Overview](docs/images/patches-1.png)
+<img width="1295" height="610" alt="image" src="https://github.com/user-attachments/assets/0cb15d11-a8a6-4426-b45f-e6c52d0410ca" />
+
 *Patch overview showing applied fixes with reasoning*
 
-![Patch System - Details](docs/images/patches-2.png)
+<img width="1284" height="605" alt="image" src="https://github.com/user-attachments/assets/5c45672e-0cde-4bf7-9b3e-303d13f89e62" />
+
 *Detailed patch view with error analysis and fix strategy*
 
-![Patch System - Diff](docs/images/patches-3.png)
+<img width="1587" height="772" alt="image" src="https://github.com/user-attachments/assets/5a6022b0-f14f-4e56-9dfa-ce0ca6e6e718" />
 *Code changes visualization with unified diff format*
 
 </div>
@@ -196,16 +180,6 @@ Advanced patching system with AI-powered reasoning, detailed error analysis, and
 
 **Perfect for:** Learning from fixes, understanding error patterns, code review
 
-### 📈 **Statistics Dashboard**
-
-Real-time analytics dashboard providing insights into debugging performance and session metrics.
-
-<div align="center">
-
-![Stats Dashboard](docs/images/stats-1.png)
-*Comprehensive statistics showing iterations, fixes, and versions*
-
-</div>
 
 **Dashboard Metrics:**
 - 🔄 **Iterations Count**: Track total debugging iterations attempted
@@ -229,12 +203,6 @@ Real-time analytics dashboard providing insights into debugging performance and 
 
 Modern, engaging landing page showcasing AI Debugger's capabilities with clear call-to-actions.
 
-<div align="center">
-
-![Landing Page](docs/images/landing-1.png)
-*Hero section with "Debug Code Intelligently" tagline and key metrics*
-
-</div>
 
 **Landing Page Features:**
 - 🎯 **Hero Section**: Eye-catching headline and value proposition
@@ -399,7 +367,7 @@ Create a `.env` file in the root directory:
 # LLM Configuration
 LLM_MODEL=codellama:7b
 OLLAMA_BASE_URL=http://localhost:11434
-GROQ_API_KEY=your_groq_api_key_here  # Optional: for cloud LLM
+
 
 # API Configuration
 API_HOST=0.0.0.0
@@ -614,27 +582,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🗺️ Roadmap
 
-### Version 1.1 (Coming Soon)
-- [ ] JavaScript/TypeScript support
-- [ ] WebSocket for real-time updates
-- [ ] Export debugging reports (PDF/Markdown)
-- [ ] Custom agent creation
-- [ ] Batch debugging multiple files
-
 ### Version 1.2
 - [ ] Java support
 - [ ] C++ support
 - [ ] VS Code extension
-- [ ] Collaborative debugging
 - [ ] Performance profiling
 
-### Version 2.0
-- [ ] Custom rule creation UI
-- [ ] Plugin system
-- [ ] Cloud deployment option
-- [ ] Team collaboration features
-- [ ] Advanced analytics dashboard
 
-See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
----
+Team - Forbidden Phishers
